@@ -1,0 +1,76 @@
+var _user$project$DataGrid$get = F2(
+	function (index, list) {
+		return A2(
+			_elm_lang$core$Maybe$map,
+			function (_p0) {
+				var _p1 = _p0;
+				return _p1._1;
+			},
+			_elm_lang$core$List$head(
+				A2(
+					_elm_lang$core$List$filter,
+					function (_p2) {
+						var _p3 = _p2;
+						return _elm_lang$core$Native_Utils.eq(_p3._0, index);
+					},
+					A2(
+						_elm_lang$core$List$indexedMap,
+						F2(
+							function (i, v) {
+								return {ctor: '_Tuple2', _0: i, _1: v};
+							}),
+						list))));
+	});
+var _user$project$DataGrid$bodyRenderer = F3(
+	function (props, row, col) {
+		var template = A2(
+			_elm_lang$core$Maybe$withDefault,
+			function (a) {
+				return _elm_lang$html$Html$text('');
+			},
+			A2(
+				_elm_lang$core$Maybe$map,
+				function (_) {
+					return _.template;
+				},
+				A2(_user$project$DataGrid$get, col, props.columns)));
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			_elm_lang$html$Html$text(''),
+			A2(
+				_elm_lang$core$Maybe$map,
+				template,
+				A2(_user$project$DataGrid$get, row - 1, props.data)));
+	});
+var _user$project$DataGrid$headerRenderer = F2(
+	function (props, col) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			_elm_lang$html$Html$text(''),
+			A2(
+				_elm_lang$core$Maybe$map,
+				function (_) {
+					return _.header;
+				},
+				A2(_user$project$DataGrid$get, col, props.columns)));
+	});
+var _user$project$DataGrid$cellRenderer = F3(
+	function (props, row, col) {
+		return _elm_lang$core$Native_Utils.eq(row, 0) ? A2(_user$project$DataGrid$headerRenderer, props, col) : A3(_user$project$DataGrid$bodyRenderer, props, row, col);
+	});
+var _user$project$DataGrid$view = function (props) {
+	return _user$project$Grid$view(
+		{
+			cellRenderer: _user$project$DataGrid$cellRenderer(props),
+			rowCount: _elm_lang$core$List$length(props.data) + 1,
+			columnCount: _elm_lang$core$List$length(props.columns)
+		});
+};
+var _user$project$DataGrid$Column = F2(
+	function (a, b) {
+		return {template: a, header: b};
+	});
+var _user$project$DataGrid$Props = F2(
+	function (a, b) {
+		return {data: a, columns: b};
+	});

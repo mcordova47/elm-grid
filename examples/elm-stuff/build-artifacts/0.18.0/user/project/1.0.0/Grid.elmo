@@ -1,0 +1,71 @@
+var _user$project$Grid$gridTemplate = function (count) {
+	return A2(
+		_elm_lang$core$String$join,
+		' ',
+		A2(
+			_elm_lang$core$List$map,
+			function (_p0) {
+				return '1fr';
+			},
+			A2(_elm_lang$core$List$range, 1, count)));
+};
+var _user$project$Grid$cellRenderer = F3(
+	function (props, row, column) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(props.cellRenderer, row, column),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Grid$renderRow = F2(
+	function (props, row) {
+		return A2(
+			_elm_lang$core$List$map,
+			A2(_user$project$Grid$cellRenderer, props, row),
+			A2(_elm_lang$core$List$range, 0, props.columnCount - 1));
+	});
+var _user$project$Grid$renderBody = function (props) {
+	return A2(
+		_elm_lang$core$List$map,
+		_user$project$Grid$renderRow(props),
+		A2(_elm_lang$core$List$range, 0, props.rowCount - 1));
+};
+var _user$project$Grid$view = function (props) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'display', _1: 'grid'},
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'grid-template-columns',
+							_1: _user$project$Grid$gridTemplate(props.columnCount)
+						},
+						_1: {
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: 'grid-template-rows',
+								_1: _user$project$Grid$gridTemplate(props.rowCount)
+							},
+							_1: {ctor: '[]'}
+						}
+					}
+				}),
+			_1: {ctor: '[]'}
+		},
+		_elm_lang$core$List$concat(
+			_user$project$Grid$renderBody(props)));
+};
+var _user$project$Grid$Props = F3(
+	function (a, b, c) {
+		return {cellRenderer: a, rowCount: b, columnCount: c};
+	});
