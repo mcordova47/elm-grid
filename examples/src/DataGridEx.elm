@@ -3,6 +3,7 @@ module BasicGrid exposing (..)
 import Html exposing (Html)
 import Html.Attributes as Attributes
 import DataGrid
+import Grid
 
 
 main : Program Never Model Msg
@@ -37,6 +38,22 @@ init =
         , Person "Paul" "McCartney" 75
         , Person "George" "Harrison" 77
         , Person "Ringo" "Starr" 74
+        , Person "John" "Lennon" 77
+        , Person "Paul" "McCartney" 75
+        , Person "George" "Harrison" 77
+        , Person "Ringo" "Starr" 74
+        , Person "John" "Lennon" 77
+        , Person "Paul" "McCartney" 75
+        , Person "George" "Harrison" 77
+        , Person "Ringo" "Starr" 74
+        , Person "John" "Lennon" 77
+        , Person "Paul" "McCartney" 75
+        , Person "George" "Harrison" 77
+        , Person "Ringo" "Starr" 74
+        , Person "John" "Lennon" 77
+        , Person "Paul" "McCartney" 75
+        , Person "George" "Harrison" 77
+        , Person "Ringo" "Starr" 74
         ]
     }
 
@@ -54,15 +71,20 @@ view model =
         [ Attributes.style bodyStyle ]
         [ DataGrid.view
             { data = model.data
+            , height = "200px"
+            , width = "300px"
             , columns =
                 [ { template = Html.text << .firstName
                   , header = header "First Name"
+                  , width = "2fr"
                   }
                 , { template = Html.text << .lastName
                   , header = header "Last Name"
+                  , width = "3fr"
                   }
                 , { template = Html.text << toString << .age
                   , header = header "Age"
+                  , width = "1fr"
                   }
                 ]
             }

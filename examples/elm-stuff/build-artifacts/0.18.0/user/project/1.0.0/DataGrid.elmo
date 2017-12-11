@@ -21,6 +21,21 @@ var _user$project$DataGrid$get = F2(
 							}),
 						list))));
 	});
+var _user$project$DataGrid$columnMeasurer = F2(
+	function (props, col) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			'1fr',
+			A2(
+				_user$project$DataGrid$get,
+				col,
+				A2(
+					_elm_lang$core$List$map,
+					function (_) {
+						return _.width;
+					},
+					props.columns)));
+	});
 var _user$project$DataGrid$bodyRenderer = F3(
 	function (props, row, col) {
 		var template = A2(
@@ -62,15 +77,24 @@ var _user$project$DataGrid$view = function (props) {
 	return _user$project$Grid$view(
 		{
 			cellRenderer: _user$project$DataGrid$cellRenderer(props),
+			columnMeasurer: _user$project$DataGrid$columnMeasurer(props),
 			rowCount: _elm_lang$core$List$length(props.data) + 1,
-			columnCount: _elm_lang$core$List$length(props.columns)
+			columnCount: _elm_lang$core$List$length(props.columns),
+			height: props.height,
+			width: props.width
 		});
 };
-var _user$project$DataGrid$Column = F2(
-	function (a, b) {
-		return {template: a, header: b};
+var _user$project$DataGrid$defaultProps = {
+	data: {ctor: '[]'},
+	columns: {ctor: '[]'},
+	height: '',
+	width: ''
+};
+var _user$project$DataGrid$Column = F3(
+	function (a, b, c) {
+		return {template: a, header: b, width: c};
 	});
-var _user$project$DataGrid$Props = F2(
-	function (a, b) {
-		return {data: a, columns: b};
+var _user$project$DataGrid$Props = F4(
+	function (a, b, c, d) {
+		return {data: a, columns: b, height: c, width: d};
 	});

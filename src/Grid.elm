@@ -1,4 +1,4 @@
-module Grid exposing (view)
+module Grid exposing (view, defaultProps)
 
 import Html exposing (Html)
 import Html.Attributes as Attributes
@@ -6,8 +6,22 @@ import Html.Attributes as Attributes
 
 type alias Props msg =
     { cellRenderer : Int -> Int -> Html msg
+    , columnMeasurer : Int -> String
     , rowCount : Int
     , columnCount : Int
+    , height : String
+    , width : String
+    }
+
+
+defaultProps : Props msg
+defaultProps =
+    { cellRenderer = \_ _ -> Html.text ""
+    , columnMeasurer = \_ -> "1fr"
+    , rowCount = 0
+    , columnCount = 0
+    , height = ""
+    , width = ""
     }
 
 
@@ -16,8 +30,10 @@ view props =
     Html.div
         [ Attributes.style
             [ ( "display", "grid" )
-            , ( "grid-template-columns", gridTemplate props.columnCount )
+            , ( "grid-template-columns", gridTemplateColumns props )
             , ( "grid-template-rows", gridTemplate props.rowCount )
+            , ( "height", props.height )
+            , ( "overflow", "auto" )
             ]
         ]
         (List.concat (renderBody props))
@@ -43,7 +59,13 @@ cellRenderer props row column =
         [ props.cellRenderer row column ]
 
 
+gridTemplateColumns : Props msg -> String
+gridTemplateColumns props =
+    String.join " "
+        (List.map props.columnMeasurer (List.range 0 (props.columnCount - 1)))
+
+
 gridTemplate : Int -> String
 gridTemplate count =
-    String.join " " <|
+    String.join " "
         (List.map (\_ -> "1fr") (List.range 1 count))

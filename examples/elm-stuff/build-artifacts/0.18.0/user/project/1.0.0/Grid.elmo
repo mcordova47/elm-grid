@@ -9,6 +9,15 @@ var _user$project$Grid$gridTemplate = function (count) {
 			},
 			A2(_elm_lang$core$List$range, 1, count)));
 };
+var _user$project$Grid$gridTemplateColumns = function (props) {
+	return A2(
+		_elm_lang$core$String$join,
+		' ',
+		A2(
+			_elm_lang$core$List$map,
+			props.columnMeasurer,
+			A2(_elm_lang$core$List$range, 0, props.columnCount - 1)));
+};
 var _user$project$Grid$cellRenderer = F3(
 	function (props, row, column) {
 		return A2(
@@ -47,7 +56,7 @@ var _user$project$Grid$view = function (props) {
 						_0: {
 							ctor: '_Tuple2',
 							_0: 'grid-template-columns',
-							_1: _user$project$Grid$gridTemplate(props.columnCount)
+							_1: _user$project$Grid$gridTemplateColumns(props)
 						},
 						_1: {
 							ctor: '::',
@@ -56,7 +65,15 @@ var _user$project$Grid$view = function (props) {
 								_0: 'grid-template-rows',
 								_1: _user$project$Grid$gridTemplate(props.rowCount)
 							},
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'height', _1: props.height},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'overflow', _1: 'auto'},
+									_1: {ctor: '[]'}
+								}
+							}
 						}
 					}
 				}),
@@ -65,7 +82,20 @@ var _user$project$Grid$view = function (props) {
 		_elm_lang$core$List$concat(
 			_user$project$Grid$renderBody(props)));
 };
-var _user$project$Grid$Props = F3(
-	function (a, b, c) {
-		return {cellRenderer: a, rowCount: b, columnCount: c};
+var _user$project$Grid$defaultProps = {
+	cellRenderer: F2(
+		function (_p2, _p1) {
+			return _elm_lang$html$Html$text('');
+		}),
+	columnMeasurer: function (_p3) {
+		return '1fr';
+	},
+	rowCount: 0,
+	columnCount: 0,
+	height: '',
+	width: ''
+};
+var _user$project$Grid$Props = F6(
+	function (a, b, c, d, e, f) {
+		return {cellRenderer: a, columnMeasurer: b, rowCount: c, columnCount: d, height: e, width: f};
 	});

@@ -2,7 +2,7 @@ module BasicGrid exposing (..)
 
 import Html exposing (Html)
 import Html.Attributes as Attributes
-import Grid
+import Grid exposing (defaultProps)
 
 
 main : Program Never Model Msg
@@ -48,15 +48,17 @@ view model =
             [ ( "width", "300px" ) ]
         ]
         [ Grid.view
-            { cellRenderer =
-                cellRenderer model.data
-            , rowCount =
-                List.length model.data
-            , columnCount =
-                model.data
-                    |> get 0
-                    |> Maybe.withDefault []
-                    |> List.length
+            { defaultProps
+                | cellRenderer =
+                    cellRenderer model.data
+                , rowCount =
+                    List.length model.data
+                , columnCount =
+                    model.data
+                        |> get 0
+                        |> Maybe.withDefault []
+                        |> List.length
+                , width = "300px"
             }
         ]
 
