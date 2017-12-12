@@ -39,21 +39,21 @@ view props =
             , rowCount = 1
             , columnCount = headerCount props
             , height = (toString props.rowHeight) ++ "px"
-            , width = ""
+            , width = px props.width
             }
         , Grid.view
             { cellRenderer = cellRenderer props
             , columnMeasurer = columnMeasurer props.columns
             , rowCount = List.length props.data
             , columnCount = List.length props.columns
-            , height = gridHeight props.height
-            , width = props.width
+            , height = px props.height
+            , width = px props.width
             }
         ]
 
 
-gridHeight : Maybe Int -> String
-gridHeight height =
+px : Maybe Int -> String
+px height =
     height
         |> Maybe.map (\h -> (toString h) ++ "px")
         |> Maybe.withDefault ""

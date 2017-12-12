@@ -33,6 +33,7 @@ view props =
             , ( "grid-template-columns", gridTemplateColumns props )
             , ( "grid-template-rows", gridTemplate props.rowCount )
             , ( "height", props.height )
+            , ( "width", props.width )
             , ( "overflow", "auto" )
             ]
         ]

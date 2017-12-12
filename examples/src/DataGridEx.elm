@@ -34,27 +34,8 @@ type alias Person =
 init : Model
 init =
     { data =
-        [ Person "John" "Lennon" 77
-        , Person "Paul" "McCartney" 75
-        , Person "George" "Harrison" 77
-        , Person "Ringo" "Starr" 74
-        , Person "John" "Lennon" 77
-        , Person "Paul" "McCartney" 75
-        , Person "George" "Harrison" 77
-        , Person "Ringo" "Starr" 74
-        , Person "John" "Lennon" 77
-        , Person "Paul" "McCartney" 75
-        , Person "George" "Harrison" 77
-        , Person "Ringo" "Starr" 74
-        , Person "John" "Lennon" 77
-        , Person "Paul" "McCartney" 75
-        , Person "George" "Harrison" 77
-        , Person "Ringo" "Starr" 74
-        , Person "John" "Lennon" 77
-        , Person "Paul" "McCartney" 75
-        , Person "George" "Harrison" 77
-        , Person "Ringo" "Starr" 74
-        ]
+        List.range 0 999
+            |> List.map beatle
     }
 
 
@@ -72,7 +53,7 @@ view model =
         [ DataGrid.view
             { data = model.data
             , height = Just 200
-            , width = "300px"
+            , width = Just 500
             , rowHeight = 20
             , columns =
                 [ { template = Html.text << .firstName
@@ -108,6 +89,21 @@ headerStyle =
 
 bodyStyle : List ( String, String )
 bodyStyle =
-    [ ( "width", "300px" )
-    , ( "padding", "20px" )
+    [ ( "padding", "20px" )
     ]
+
+
+beatle : Int -> Person
+beatle n =
+    case n % 4 of
+        0 ->
+            Person "John" "Lennon" 77
+
+        1 ->
+            Person "Paul" "McCartney" 75
+
+        2 ->
+            Person "George" "Harrison" 77
+
+        _ ->
+            Person "Ringo" "Starr" 74

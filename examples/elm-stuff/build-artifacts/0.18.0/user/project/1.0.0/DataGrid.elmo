@@ -136,7 +136,7 @@ var _user$project$DataGrid$view = function (props) {
 						_elm_lang$core$Basics_ops['++'],
 						_elm_lang$core$Basics$toString(props.rowHeight),
 						'px'),
-					width: ''
+					width: props.width
 				}),
 			_1: {
 				ctor: '::',

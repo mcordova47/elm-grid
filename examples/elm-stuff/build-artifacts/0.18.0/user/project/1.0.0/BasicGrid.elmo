@@ -1,11 +1,7 @@
 var _user$project$BasicGrid$bodyStyle = {
 	ctor: '::',
-	_0: {ctor: '_Tuple2', _0: 'width', _1: '300px'},
-	_1: {
-		ctor: '::',
-		_0: {ctor: '_Tuple2', _0: 'padding', _1: '20px'},
-		_1: {ctor: '[]'}
-	}
+	_0: {ctor: '_Tuple2', _0: 'padding', _1: '20px'},
+	_1: {ctor: '[]'}
 };
 var _user$project$BasicGrid$headerStyle = {
 	ctor: '::',
@@ -44,7 +40,7 @@ var _user$project$BasicGrid$view = function (model) {
 				{
 					data: model.data,
 					height: _elm_lang$core$Maybe$Just(200),
-					width: '300px',
+					width: '500px',
 					rowHeight: 20,
 					columns: {
 						ctor: '::',
@@ -103,88 +99,24 @@ var _user$project$BasicGrid$Person = F3(
 	function (a, b, c) {
 		return {firstName: a, lastName: b, age: c};
 	});
-var _user$project$BasicGrid$init = {
-	data: {
-		ctor: '::',
-		_0: A3(_user$project$BasicGrid$Person, 'John', 'Lennon', 77),
-		_1: {
-			ctor: '::',
-			_0: A3(_user$project$BasicGrid$Person, 'Paul', 'McCartney', 75),
-			_1: {
-				ctor: '::',
-				_0: A3(_user$project$BasicGrid$Person, 'George', 'Harrison', 77),
-				_1: {
-					ctor: '::',
-					_0: A3(_user$project$BasicGrid$Person, 'Ringo', 'Starr', 74),
-					_1: {
-						ctor: '::',
-						_0: A3(_user$project$BasicGrid$Person, 'John', 'Lennon', 77),
-						_1: {
-							ctor: '::',
-							_0: A3(_user$project$BasicGrid$Person, 'Paul', 'McCartney', 75),
-							_1: {
-								ctor: '::',
-								_0: A3(_user$project$BasicGrid$Person, 'George', 'Harrison', 77),
-								_1: {
-									ctor: '::',
-									_0: A3(_user$project$BasicGrid$Person, 'Ringo', 'Starr', 74),
-									_1: {
-										ctor: '::',
-										_0: A3(_user$project$BasicGrid$Person, 'John', 'Lennon', 77),
-										_1: {
-											ctor: '::',
-											_0: A3(_user$project$BasicGrid$Person, 'Paul', 'McCartney', 75),
-											_1: {
-												ctor: '::',
-												_0: A3(_user$project$BasicGrid$Person, 'George', 'Harrison', 77),
-												_1: {
-													ctor: '::',
-													_0: A3(_user$project$BasicGrid$Person, 'Ringo', 'Starr', 74),
-													_1: {
-														ctor: '::',
-														_0: A3(_user$project$BasicGrid$Person, 'John', 'Lennon', 77),
-														_1: {
-															ctor: '::',
-															_0: A3(_user$project$BasicGrid$Person, 'Paul', 'McCartney', 75),
-															_1: {
-																ctor: '::',
-																_0: A3(_user$project$BasicGrid$Person, 'George', 'Harrison', 77),
-																_1: {
-																	ctor: '::',
-																	_0: A3(_user$project$BasicGrid$Person, 'Ringo', 'Starr', 74),
-																	_1: {
-																		ctor: '::',
-																		_0: A3(_user$project$BasicGrid$Person, 'John', 'Lennon', 77),
-																		_1: {
-																			ctor: '::',
-																			_0: A3(_user$project$BasicGrid$Person, 'Paul', 'McCartney', 75),
-																			_1: {
-																				ctor: '::',
-																				_0: A3(_user$project$BasicGrid$Person, 'George', 'Harrison', 77),
-																				_1: {
-																					ctor: '::',
-																					_0: A3(_user$project$BasicGrid$Person, 'Ringo', 'Starr', 74),
-																					_1: {ctor: '[]'}
-																				}
-																			}
-																		}
-																	}
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+var _user$project$BasicGrid$beatle = function (n) {
+	var _p4 = A2(_elm_lang$core$Basics_ops['%'], n, 4);
+	switch (_p4) {
+		case 0:
+			return A3(_user$project$BasicGrid$Person, 'John', 'Lennon', 77);
+		case 1:
+			return A3(_user$project$BasicGrid$Person, 'Paul', 'McCartney', 75);
+		case 2:
+			return A3(_user$project$BasicGrid$Person, 'George', 'Harrison', 77);
+		default:
+			return A3(_user$project$BasicGrid$Person, 'Ringo', 'Starr', 74);
 	}
+};
+var _user$project$BasicGrid$init = {
+	data: A2(
+		_elm_lang$core$List$map,
+		_user$project$BasicGrid$beatle,
+		A2(_elm_lang$core$List$range, 0, 999))
 };
 var _user$project$BasicGrid$main = _elm_lang$html$Html$beginnerProgram(
 	{model: _user$project$BasicGrid$init, update: _user$project$BasicGrid$update, view: _user$project$BasicGrid$view})();

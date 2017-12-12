@@ -43,10 +43,7 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    Html.div
-        [ Attributes.style
-            [ ( "width", "300px" ) ]
-        ]
+    Html.div []
         [ Grid.view
             { defaultProps
                 | cellRenderer =
