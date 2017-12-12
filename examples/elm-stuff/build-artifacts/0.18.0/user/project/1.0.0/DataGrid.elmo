@@ -21,22 +21,55 @@ var _user$project$DataGrid$get = F2(
 							}),
 						list))));
 	});
+var _user$project$DataGrid$hasScrollbar = function (props) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		false,
+		A2(
+			_elm_lang$core$Maybe$map,
+			function (h) {
+				return _elm_lang$core$Native_Utils.cmp(
+					h,
+					props.rowHeight * _elm_lang$core$List$length(props.data)) < 0;
+			},
+			props.height));
+};
+var _user$project$DataGrid$addExtraColumn = F2(
+	function (props, cols) {
+		return _user$project$DataGrid$hasScrollbar(props) ? A2(
+			_elm_lang$core$Basics_ops['++'],
+			cols,
+			{
+				ctor: '::',
+				_0: {
+					template: function (_p4) {
+						return _elm_lang$html$Html$text('');
+					},
+					header: _elm_lang$html$Html$text(''),
+					width: '17px'
+				},
+				_1: {ctor: '[]'}
+			}) : cols;
+	});
+var _user$project$DataGrid$headerCount = function (props) {
+	return _user$project$DataGrid$hasScrollbar(props) ? (_elm_lang$core$List$length(props.columns) + 1) : _elm_lang$core$List$length(props.columns);
+};
 var _user$project$DataGrid$columnMeasurer = F2(
-	function (props, col) {
+	function (columns, index) {
 		return A2(
 			_elm_lang$core$Maybe$withDefault,
 			'1fr',
 			A2(
 				_user$project$DataGrid$get,
-				col,
+				index,
 				A2(
 					_elm_lang$core$List$map,
 					function (_) {
 						return _.width;
 					},
-					props.columns)));
+					columns)));
 	});
-var _user$project$DataGrid$bodyRenderer = F3(
+var _user$project$DataGrid$cellRenderer = F3(
 	function (props, row, col) {
 		var template = A2(
 			_elm_lang$core$Maybe$withDefault,
@@ -55,10 +88,10 @@ var _user$project$DataGrid$bodyRenderer = F3(
 			A2(
 				_elm_lang$core$Maybe$map,
 				template,
-				A2(_user$project$DataGrid$get, row - 1, props.data)));
+				A2(_user$project$DataGrid$get, row, props.data)));
 	});
-var _user$project$DataGrid$headerRenderer = F2(
-	function (props, col) {
+var _user$project$DataGrid$headerRenderer = F3(
+	function (props, _p5, col) {
 		return A2(
 			_elm_lang$core$Maybe$withDefault,
 			_elm_lang$html$Html$text(''),
@@ -67,34 +100,71 @@ var _user$project$DataGrid$headerRenderer = F2(
 				function (_) {
 					return _.header;
 				},
-				A2(_user$project$DataGrid$get, col, props.columns)));
+				A2(
+					_user$project$DataGrid$get,
+					col,
+					A2(_user$project$DataGrid$addExtraColumn, props, props.columns))));
 	});
-var _user$project$DataGrid$cellRenderer = F3(
-	function (props, row, col) {
-		return _elm_lang$core$Native_Utils.eq(row, 0) ? A2(_user$project$DataGrid$headerRenderer, props, col) : A3(_user$project$DataGrid$bodyRenderer, props, row, col);
-	});
+var _user$project$DataGrid$gridHeight = function (height) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		'',
+		A2(
+			_elm_lang$core$Maybe$map,
+			function (h) {
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					_elm_lang$core$Basics$toString(h),
+					'px');
+			},
+			height));
+};
 var _user$project$DataGrid$view = function (props) {
-	return _user$project$Grid$view(
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
 		{
-			cellRenderer: _user$project$DataGrid$cellRenderer(props),
-			columnMeasurer: _user$project$DataGrid$columnMeasurer(props),
-			rowCount: _elm_lang$core$List$length(props.data) + 1,
-			columnCount: _elm_lang$core$List$length(props.columns),
-			height: props.height,
-			width: props.width
+			ctor: '::',
+			_0: _user$project$Grid$view(
+				{
+					cellRenderer: _user$project$DataGrid$headerRenderer(props),
+					columnMeasurer: _user$project$DataGrid$columnMeasurer(
+						A2(_user$project$DataGrid$addExtraColumn, props, props.columns)),
+					rowCount: 1,
+					columnCount: _user$project$DataGrid$headerCount(props),
+					height: A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(props.rowHeight),
+						'px'),
+					width: ''
+				}),
+			_1: {
+				ctor: '::',
+				_0: _user$project$Grid$view(
+					{
+						cellRenderer: _user$project$DataGrid$cellRenderer(props),
+						columnMeasurer: _user$project$DataGrid$columnMeasurer(props.columns),
+						rowCount: _elm_lang$core$List$length(props.data),
+						columnCount: _elm_lang$core$List$length(props.columns),
+						height: _user$project$DataGrid$gridHeight(props.height),
+						width: props.width
+					}),
+				_1: {ctor: '[]'}
+			}
 		});
 };
 var _user$project$DataGrid$defaultProps = {
 	data: {ctor: '[]'},
 	columns: {ctor: '[]'},
-	height: '',
-	width: ''
+	height: _elm_lang$core$Maybe$Nothing,
+	width: '',
+	rowHeight: 20
 };
 var _user$project$DataGrid$Column = F3(
 	function (a, b, c) {
 		return {template: a, header: b, width: c};
 	});
-var _user$project$DataGrid$Props = F4(
-	function (a, b, c, d) {
-		return {data: a, columns: b, height: c, width: d};
+var _user$project$DataGrid$Props = F5(
+	function (a, b, c, d, e) {
+		return {data: a, columns: b, height: c, width: d, rowHeight: e};
 	});

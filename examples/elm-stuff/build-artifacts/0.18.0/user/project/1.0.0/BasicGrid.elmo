@@ -43,8 +43,9 @@ var _user$project$BasicGrid$view = function (model) {
 			_0: _user$project$DataGrid$view(
 				{
 					data: model.data,
-					height: '200px',
+					height: _elm_lang$core$Maybe$Just(200),
 					width: '300px',
+					rowHeight: 20,
 					columns: {
 						ctor: '::',
 						_0: {

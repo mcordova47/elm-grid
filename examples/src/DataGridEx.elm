@@ -71,8 +71,9 @@ view model =
         [ Attributes.style bodyStyle ]
         [ DataGrid.view
             { data = model.data
-            , height = "200px"
+            , height = Just 200
             , width = "300px"
+            , rowHeight = 20
             , columns =
                 [ { template = Html.text << .firstName
                   , header = header "First Name"
