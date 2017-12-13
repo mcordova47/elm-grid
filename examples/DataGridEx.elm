@@ -2,6 +2,7 @@ module BasicGrid exposing (..)
 
 import Html exposing (Html)
 import Html.Attributes as Attributes
+import Html.Events as Events
 import DataGrid
 import Grid
 
@@ -16,7 +17,7 @@ main =
 
 
 type Msg
-    = NoOp
+    = ToggleChecked Int
 
 
 type alias Model =
@@ -28,6 +29,8 @@ type alias Person =
     { firstName : String
     , lastName : String
     , age : Int
+    , checked : Bool
+    , id : Int
     }
 
 
@@ -42,8 +45,20 @@ init =
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        NoOp ->
-            model
+        ToggleChecked index ->
+            { model | data = toggleChecked index model.data }
+
+
+toggleChecked : Int -> List Person -> List Person
+toggleChecked index people =
+    List.map
+        (\person ->
+            if person.id == index then
+                { person | checked = not person.checked }
+            else
+                person
+        )
+        people
 
 
 view : Model -> Html Msg
@@ -56,7 +71,11 @@ view model =
             , width = Just 500
             , rowHeight = 20
             , columns =
-                [ { template = Html.text << .firstName
+                [ { template = checkboxCell
+                  , header = header ""
+                  , width = "25px"
+                  }
+                , { template = Html.text << .firstName
                   , header = header "First Name"
                   , width = "2fr"
                   }
@@ -80,6 +99,15 @@ header title =
         [ Html.text title ]
 
 
+checkboxCell : Person -> Html Msg
+checkboxCell person =
+    Html.div
+        [ Events.onClick (ToggleChecked person.id)
+        , Attributes.style (checkboxStyle person.checked)
+        ]
+        []
+
+
 headerStyle : List ( String, String )
 headerStyle =
     [ ( "color", "#adadad" )
@@ -93,17 +121,35 @@ bodyStyle =
     ]
 
 
+checkboxStyle : Bool -> List ( String, String )
+checkboxStyle checked =
+    let
+        bgColor =
+            if checked then
+                "black"
+            else
+                ""
+    in
+        [ ( "border", "1px solid black" )
+        , ( "background-color", bgColor )
+        , ( "width", "15px" )
+        , ( "height", "15px" )
+        , ( "cursor", "pointer" )
+        , ( "border-radius", "3px" )
+        ]
+
+
 beatle : Int -> Person
 beatle n =
     case n % 4 of
         0 ->
-            Person "John" "Lennon" 77
+            Person "John" "Lennon" 77 False n
 
         1 ->
-            Person "Paul" "McCartney" 75
+            Person "Paul" "McCartney" 75 False n
 
         2 ->
-            Person "George" "Harrison" 77
+            Person "George" "Harrison" 77 False n
 
         _ ->
-            Person "Ringo" "Starr" 74
+            Person "Ringo" "Starr" 74 False n
