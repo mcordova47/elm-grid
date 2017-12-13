@@ -15,7 +15,7 @@ type alias Props a msg =
     { data : List a
     , columns : List (Column a msg)
     , height : Maybe Int
-    , width : String
+    , width : Maybe Int
     , rowHeight : Int
     }
 
@@ -25,7 +25,7 @@ defaultProps =
     { data = []
     , columns = []
     , height = Nothing
-    , width = ""
+    , width = Nothing
     , rowHeight = 20
     }
 
